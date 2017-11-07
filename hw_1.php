@@ -15,10 +15,11 @@
 
    session_start();
    //init session
-   $_SESSION["data"] = "";
+   $_SESSION["content"] = "";
 
    if(isset($_POST['submit']))
    {
+   		$_SESSION["content"] = $_POST['text'];
         $query = "INSERT INTO `gb` (`id`, `content`) VALUES (NULL, '" . $_POST['text'] . "')";
         $result = $conn->query($query);
    }
@@ -31,8 +32,8 @@
    </head>
    <body>
       <form method="post">
-         <textarea name="text"></textarea>
-         <input type="submit" name="submit" value="submit"/>
+         <textarea name="text"><?php if($_SESSION["content"] != "") echo $_SESSION["content"]; ?></textarea>
+         <input type="submit" name="submit" value="<?php if($_SESSION["content"] != "") echo "ddddd"; else echo "submit"; ?>"/>
       </form>
       <br/>
       <?php
