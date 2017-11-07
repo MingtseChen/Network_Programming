@@ -52,7 +52,7 @@
 			<textarea name="text"><?php
 				if ($_SESSION["content"] != "") echo $_SESSION["content"]; ?></textarea>
 			<input type="submit" name="submit" value="<?php
-				if ($_SESSION["content"] != "") echo "ddddd";
+				if ($_SESSION["content"] != "") echo "edit";
 				  else echo "submit"; ?>"/>
 		</form>
 		<br/>
