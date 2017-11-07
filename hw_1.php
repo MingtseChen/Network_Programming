@@ -23,8 +23,6 @@ if (isset($_POST['Submit']) && $_POST['text'] != "") {
     $query = "INSERT INTO `gb` (`id`, `content`) VALUES (NULL, '" . $_SESSION['content'] . "')";
     if ($conn->query($query) === TRUE) {
         $_SESSION['last_id'] = $conn->insert_id;
-    } else {
-        echo "Error: " . $sql . "<br>" . $conn->error;
     }
 }
 if (isset($_POST['Revise'])) {
@@ -39,32 +37,38 @@ if (isset($_POST['Revise'])) {
     <meta charset="utf-8">
     <title>test</title>
 </head>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css">
 <body>
-<form method="post">
-    <textarea name="text" style="margin: 0px; width: 70%; height: 181px;"><?php echo $_SESSION["content"]; ?></textarea>
+<div class="container">
+    <h1>Guest Book</h1>
+    <br/>
+    <form method="post">
+        <textarea name="text" class="form-control" rows="5"><?php echo $_SESSION["content"]; ?></textarea>
+        <br/>
+        <?php
+        if ($_SESSION["content"] != "")
+            echo "<button type=\"submit\" name=\"Revise\"  class='btn btn-primary'>Revise</button>";
+        else
+            echo "<button type=\"submit\" name=\"Submit\" class='btn btn-info'>Submit</button>";
+        ?>
+    </form>
+    <br/>
     <?php
-    if ($_SESSION["content"] != "")
-        echo "<input type=\"submit\" name=\"Revise\" value=\"Revise\"/>";
-    else
-        echo "<input type=\"submit\" name=\"Submit\" value=\"Submit\"/>";
+    $query = "SELECT id, content FROM gb";
+    $results = $conn->query($query);
+    $query2 = "SELECT id FROM gb WHERE content='hello world'";
+    $id = $conn->query($query2);
     ?>
-</form>
-<br/>
-<?php
-$query = "SELECT id, content FROM gb";
-$results = $conn->query($query);
-$query2 = "SELECT id FROM gb WHERE content='hello world'";
-$id = $conn->query($query2);
-?>
-<table border="1" width="70%">
-    <?php
-    foreach ($results as $result) {
-        echo "<tr><td>";
-        echo $result['content'];
-        echo "</td></tr>";
-    }
-    $conn->close();
-    ?>
-</table>
+    <table class="table table-hover">
+        <?php
+        foreach ($results as $result) {
+            echo "<tr><td>";
+            echo $result['content'];
+            echo "</td></tr>";
+        }
+        $conn->close();
+        ?>
+    </table>
+</div>
 </body>
 </html>
