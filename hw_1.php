@@ -56,8 +56,6 @@ if (isset($_POST['Revise'])) {
     <?php
     $query = "SELECT id, content FROM gb";
     $results = $conn->query($query);
-    $query2 = "SELECT id FROM gb WHERE content='hello world'";
-    $id = $conn->query($query2);
     ?>
     <table class="table table-hover">
         <?php
